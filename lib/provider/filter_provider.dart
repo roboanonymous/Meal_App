@@ -1,4 +1,3 @@
-import 'package:meal_app/Model/meal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum Filter {
