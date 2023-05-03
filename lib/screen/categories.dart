@@ -7,8 +7,14 @@ import 'package:meal_app/screen/meals.dart';
 
 class CategoriesScreen extends StatelessWidget{
 
- CategoriesScreen({super.key, required this.onToggleFavorite});
+const CategoriesScreen({
+  super.key, 
+required this.onToggleFavorite, 
+required this.availableMeals,
+});
+
 final void Function(Meal meal) onToggleFavorite;
+final List<Meal> availableMeals;
 
 void _selectcategory(BuildContext context, Category category){
    final filteredMeals = dummyMeals
@@ -31,7 +37,8 @@ void _selectcategory(BuildContext context, Category category){
   @override
   Widget build(BuildContext context) {
     return GridView(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+       padding: const EdgeInsets.all(24),
+       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 3/2,
           crossAxisSpacing: 20,
@@ -39,7 +46,13 @@ void _selectcategory(BuildContext context, Category category){
           ) , 
         children: [
           for(final category in availableCategories)
-          CategoryGridItem(category: category,onselectcategory: (){_selectcategory(context, category);
+          CategoryGridItem(
+            category: category,
+            onselectcategory: (){
+              _selectcategory(
+                context, 
+                category
+                );
           },)
         ],
     );
