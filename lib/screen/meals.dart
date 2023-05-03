@@ -3,14 +3,17 @@ import 'package:meal_app/widgets/meal_item.dart';
 import '../Model/meal.dart';
 import 'package:meal_app/screen/meal_details.dart';
 
+class MealsScreen extends StatelessWidget {
+  const MealsScreen({
+    super.key,
+    this.title,
+    required this.meals,
+  });
 
-class MealsScreen extends StatelessWidget{
-  const MealsScreen({super.key , this.title , required this.meals, });
-  
-  final String ?title;
+  final String? title;
   final List<Meal> meals;
 
-   void selectMeal(BuildContext context, Meal meal) {
+  void selectMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealDetailsScreen(
@@ -22,8 +25,7 @@ class MealsScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-
-     Widget content = Center(
+    Widget content = Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -44,7 +46,6 @@ class MealsScreen extends StatelessWidget{
       ),
     );
 
-    
     if (meals.isNotEmpty) {
       content = ListView.builder(
         itemCount: meals.length,
@@ -61,7 +62,6 @@ class MealsScreen extends StatelessWidget{
       return content;
     }
 
-
     return Scaffold(
       appBar: AppBar(
         title: Text(title!),
@@ -69,5 +69,4 @@ class MealsScreen extends StatelessWidget{
       body: content,
     );
   }
-
 }

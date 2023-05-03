@@ -1,36 +1,23 @@
 import 'package:meal_app/Model/meal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum Filter {
-  glutenFree,
-  lactoseFree,
-  vegetarian,
-  vegan,
-}
+class FavoriteMealsNotifier extends StateNotifier<List<Meal>> {
+  FavoriteMealsNotifier() : super([]);
 
-class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
-  FiltersNotifier()
-      : super({
-          Filter.glutenFree: false,
-          Filter.lactoseFree: false,
-          Filter.vegetarian: false,
-          Filter.vegan: false
-        });
+  bool toggleMealFavoriteStatus(Meal meal) {
+    final mealIsFavorite = state.contains(meal);
 
-  void setFilters(Map<Filter, bool> chosenFilters) {
-    state = chosenFilters;
-  }
-
-  void setFilter(Filter filter, bool isActive) {
-    // state[filter] = isActive; // not allowed! => mutating state
-    state = {
-      ...state,
-      filter: isActive,
-    };
+    if (mealIsFavorite) {
+      state = state.where((m) => m.id != meal.id).toList();
+      return false;
+    } else {
+      state = [...state, meal];
+      return true;
+    }
   }
 }
 
-final filtersProvider =
-    StateNotifierProvider<FiltersNotifier, Map<Filter, bool>>(
-  (ref) => FiltersNotifier(),
-);
+final favoriteMealsProvider =
+    StateNotifierProvider<FavoriteMealsNotifier, List<Meal>>((ref) {
+  return FavoriteMealsNotifier();
+});
